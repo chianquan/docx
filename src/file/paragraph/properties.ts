@@ -3,6 +3,7 @@
 import { IContext, IgnoreIfEmptyXmlComponent, IXmlableObject, OnOffElement, XmlComponent } from "file/xml-components";
 import { DocumentWrapper } from "../document-wrapper";
 import { IShadingAttributesProperties, Shading } from "../shading";
+import { StringValueElement } from "./../xml-components/simple-elements";
 import { Alignment, AlignmentType } from "./formatting/alignment";
 import { Border, IBordersOptions, ThematicBreak } from "./formatting/border";
 import { PageBreakBefore } from "./formatting/break";
@@ -41,6 +42,7 @@ export interface IParagraphPropertiesOptions extends IParagraphStylePropertiesOp
     readonly heading?: HeadingLevel;
     readonly bidirectional?: boolean;
     readonly pageBreakBefore?: boolean;
+    readonly autoSpaceDN?: boolean;
     readonly tabStops?: {
         readonly position: number | TabStopPosition;
         readonly type: TabStopType;
@@ -64,6 +66,9 @@ export class ParagraphProperties extends IgnoreIfEmptyXmlComponent {
 
         if (!options) {
             return this;
+        }
+        if (options.autoSpaceDN === false) {
+            this.push(new StringValueElement("w:autoSpaceDN", "0"));
         }
 
         if (options.heading) {

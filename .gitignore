@@ -62,3 +62,6 @@ tmp
 
 # nyc
 .nyc_output
+
+docx/*
+.vscode/launch.json
